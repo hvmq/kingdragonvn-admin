@@ -15,6 +15,7 @@ class _MoneyOrdersTabState extends State<MoneyOrdersTab> {
   final ScrollController _scrollController = ScrollController();
   String _selectedCategory = 'all';
   bool _isInitialized = false;
+  String? _processingTransactionId;
 
   @override
   void initState() {
@@ -64,12 +65,23 @@ class _MoneyOrdersTabState extends State<MoneyOrdersTab> {
     print('handleStatusUpdate - Transaction ID: $transactionId');
     final token = context.read<AuthProvider>().token;
     if (token != null) {
-      await context.read<TransactionProvider>().updateTransactionStatus(
-            token,
-            transactionId,
-            status,
-          );
-      await _loadInitialData();
+      setState(() {
+        _processingTransactionId = transactionId;
+      });
+      try {
+        await context.read<TransactionProvider>().updateTransactionStatus(
+              token,
+              transactionId,
+              status,
+            );
+        await _loadInitialData();
+      } finally {
+        if (mounted) {
+          setState(() {
+            _processingTransactionId = null;
+          });
+        }
+      }
     }
   }
 
@@ -233,46 +245,58 @@ class _MoneyOrdersTabState extends State<MoneyOrdersTab> {
                             ),
                             DataCell(
                               transaction.status == 'pending'
-                                  ? Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        TextButton(
-                                          onPressed: () => _handleStatusUpdate(
-                                            transaction.id,
-                                            'approved',
+                                  ? _processingTransactionId == transaction.id
+                                      ? const SizedBox(
+                                          width: 20,
+                                          height: 20,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
                                           ),
-                                          style: TextButton.styleFrom(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8),
-                                            minimumSize: Size.zero,
-                                          ),
-                                          child: const Text(
-                                            'Duyệt',
-                                            style: TextStyle(
-                                              color: Colors.green,
+                                        )
+                                      : Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            TextButton(
+                                              onPressed: () =>
+                                                  _handleStatusUpdate(
+                                                transaction.id,
+                                                'approved',
+                                              ),
+                                              style: TextButton.styleFrom(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8),
+                                                minimumSize: Size.zero,
+                                              ),
+                                              child: const Text(
+                                                'Duyệt',
+                                                style: TextStyle(
+                                                  color: Colors.green,
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                        const SizedBox(width: 8),
-                                        TextButton(
-                                          onPressed: () => _handleStatusUpdate(
-                                            transaction.id,
-                                            'rejected',
-                                          ),
-                                          style: TextButton.styleFrom(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8),
-                                            minimumSize: Size.zero,
-                                          ),
-                                          child: const Text(
-                                            'Từ chối',
-                                            style: TextStyle(
-                                              color: Colors.red,
+                                            const SizedBox(width: 8),
+                                            TextButton(
+                                              onPressed: () =>
+                                                  _handleStatusUpdate(
+                                                transaction.id,
+                                                'rejected',
+                                              ),
+                                              style: TextButton.styleFrom(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8),
+                                                minimumSize: Size.zero,
+                                              ),
+                                              child: const Text(
+                                                'Từ chối',
+                                                style: TextStyle(
+                                                  color: Colors.red,
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                      ],
-                                    )
+                                          ],
+                                        )
                                   : const SizedBox.shrink(),
                             ),
                           ],
