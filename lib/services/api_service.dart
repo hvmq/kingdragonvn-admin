@@ -6,7 +6,8 @@ import '../models/transaction_response.dart';
 
 class ApiService {
   // TODO: Update this URL with your current ngrok URL
-  static const String baseUrl = 'https://kingdragonvn-be.onrender.com/api';
+  // static const String baseUrl = 'https://kingdragonvn-be.onrender.com/api';
+  static const String baseUrl = 'http://localhost:3000/api';
 
   static Future<AuthResponse> login(String phoneNumber, String password) async {
     try {
@@ -104,6 +105,8 @@ class ApiService {
   ) async {
     try {
       print('ApiService - Updating transaction status');
+      print('$baseUrl/transactions/$transactionId');
+      print('ApiService - Status: $status');
       final response = await http.put(
         Uri.parse('$baseUrl/transactions/$transactionId'),
         headers: {

@@ -43,7 +43,7 @@ class Transaction {
 
   factory Transaction.fromJson(Map<String, dynamic> json) {
     return Transaction(
-      id: json['_id']?.toString() ?? '',
+      id: json['id']?.toString() ?? '',
       type: json['type']?.toString() ?? '',
       amount: double.tryParse(json['amount']?.toString() ?? '0') ?? 0.0,
       status: json['status']?.toString() ?? 'pending',

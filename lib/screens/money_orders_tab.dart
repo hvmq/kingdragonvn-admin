@@ -61,6 +61,7 @@ class _MoneyOrdersTabState extends State<MoneyOrdersTab> {
 
   Future<void> _handleStatusUpdate(String transactionId, String status) async {
     if (!mounted) return;
+    print('handleStatusUpdate - Transaction ID: $transactionId');
     final token = context.read<AuthProvider>().token;
     if (token != null) {
       await context.read<TransactionProvider>().updateTransactionStatus(
@@ -68,6 +69,7 @@ class _MoneyOrdersTabState extends State<MoneyOrdersTab> {
             transactionId,
             status,
           );
+      await _loadInitialData();
     }
   }
 
@@ -205,6 +207,8 @@ class _MoneyOrdersTabState extends State<MoneyOrdersTab> {
                         DataColumn(label: Text('Thao tác')),
                       ],
                       rows: transactions.map((transaction) {
+                        print(
+                            'transaction - Transaction ID: ${transaction.id}');
                         return DataRow(
                           cells: [
                             DataCell(
