@@ -24563,7 +24563,7 @@ aC_(a,b){var s=0,r=A.R(t.W8),q,p=2,o,n,m,l,k,j,i,h,g,f
 var $async$WD=A.N(function(c,d){if(c===1){o=d
 s=p}while(true)switch(s){case 0:p=4
 A.bz("ApiService - Making login request for phone: "+a)
-k=A.ez("http://localhost:3000/api/auth/login")
+k=A.ez("https://kingdragonvn-be.onrender.com/api/auth/login")
 j=t.N
 i=A.ak(["Content-Type","application/json"],j,j)
 s=7
@@ -24610,7 +24610,7 @@ s=p}while(true)switch(s){case 0:p=4
 A.bz("ApiService - Fetching users list")
 k=t.N
 s=7
-return A.V(A.arb(A.ez("http://localhost:3000/api/auth/users"),A.ak(["Content-Type","application/json","Authorization","Bearer "+a],k,k)),$async$WC)
+return A.V(A.arb(A.ez("https://kingdragonvn-be.onrender.com/api/auth/users"),A.ak(["Content-Type","application/json","Authorization","Bearer "+a],k,k)),$async$WC)
 case 7:n=c
 k=n
 A.bz("ApiService - Raw users response: "+A.fB(A.fx(k.e)).cK(0,k.w))
@@ -24645,7 +24645,7 @@ s=p}while(true)switch(s){case 0:p=4
 A.bz("ApiService - Fetching transactions")
 k=t.N
 s=7
-return A.V(A.arb(A.ez("http://localhost:3000/api/transactions?page="+c+"&limit="+b),A.ak(["Content-Type","application/json","Authorization","Bearer "+a],k,k)),$async$FY)
+return A.V(A.arb(A.ez("https://kingdragonvn-be.onrender.com/api/transactions?page="+c+"&limit="+b),A.ak(["Content-Type","application/json","Authorization","Bearer "+a],k,k)),$async$FY)
 case 7:n=e
 k=n
 A.bz("ApiService - Raw transactions response: "+A.fB(A.fx(k.e)).cK(0,k.w))
@@ -24678,7 +24678,7 @@ aC1(a,b,c){var s=0,r=A.R(t.H),q=1,p,o,n,m,l,k,j,i
 var $async$WF=A.N(function(d,e){if(d===1){p=e
 s=q}while(true)switch(s){case 0:q=3
 A.bz("ApiService - Updating transaction status")
-m="http://localhost:3000/api/transactions/"+b
+m="https://kingdragonvn-be.onrender.com/api/transactions/"+b
 A.bz(m)
 A.bz("ApiService - Status: "+c)
 m=A.ez(m)
@@ -24714,7 +24714,7 @@ s=p}while(true)switch(s){case 0:p=4
 A.bz("ApiService - Searching users with query: "+b)
 k=t.N
 s=7
-return A.V(A.arb(A.ez("http://localhost:3000/api/auth/users/search?query="+b),A.ak(["Content-Type","application/json","Authorization","Bearer "+a],k,k)),$async$WE)
+return A.V(A.arb(A.ez("https://kingdragonvn-be.onrender.com/api/auth/users/search?query="+b),A.ak(["Content-Type","application/json","Authorization","Bearer "+a],k,k)),$async$WE)
 case 7:n=d
 k=n
 A.bz("ApiService - Raw search response: "+A.fB(A.fx(k.e)).cK(0,k.w))
