@@ -18,6 +18,7 @@ class ApiService {
         body: jsonEncode({
           'phoneNumber': phoneNumber,
           'password': password,
+          'deviceId': 'admin',
         }),
       );
 
