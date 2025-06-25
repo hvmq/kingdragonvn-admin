@@ -95,6 +95,9 @@ class VipPackage {
   final String description;
   final List<String> benefits;
   final bool isActive;
+  final String? createdAt;
+  final String? updatedAt;
+  final int? adjustedPrice;
 
   VipPackage({
     required this.id,
@@ -104,6 +107,9 @@ class VipPackage {
     required this.description,
     required this.benefits,
     required this.isActive,
+    this.createdAt,
+    this.updatedAt,
+    this.adjustedPrice,
   });
 
   factory VipPackage.fromJson(Map<String, dynamic> json) {
@@ -115,6 +121,71 @@ class VipPackage {
       description: json['description'] as String,
       benefits: List<String>.from(json['benefits']),
       isActive: json['isActive'] as bool,
+      createdAt: json['createdAt'],
+      updatedAt: json['updatedAt'],
+      adjustedPrice: json['adjustedPrice'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'price': price,
+      'duration': duration,
+      'description': description,
+      'benefits': benefits,
+      'isActive': isActive,
+    };
+  }
+
+  VipPackage copyWith({
+    String? id,
+    String? name,
+    int? price,
+    int? duration,
+    String? description,
+    List<String>? benefits,
+    bool? isActive,
+    String? createdAt,
+    String? updatedAt,
+    int? adjustedPrice,
+  }) {
+    return VipPackage(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      price: price ?? this.price,
+      duration: duration ?? this.duration,
+      description: description ?? this.description,
+      benefits: benefits ?? this.benefits,
+      isActive: isActive ?? this.isActive,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      adjustedPrice: adjustedPrice ?? this.adjustedPrice,
+    );
+  }
+}
+
+class VipPackageResponse {
+  final String message;
+  final List<VipPackage> packages;
+  final String currentVip;
+  final int remainingDays;
+
+  VipPackageResponse({
+    required this.message,
+    required this.packages,
+    required this.currentVip,
+    required this.remainingDays,
+  });
+
+  factory VipPackageResponse.fromJson(Map<String, dynamic> json) {
+    return VipPackageResponse(
+      message: json['message'] ?? '',
+      packages: (json['packages'] as List)
+          .map((package) => VipPackage.fromJson(package))
+          .toList(),
+      currentVip: json['currentVip'] ?? '',
+      remainingDays: json['remainingDays'] ?? 0,
     );
   }
 }

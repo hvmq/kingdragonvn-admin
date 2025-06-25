@@ -160,4 +160,111 @@ class ApiService {
       rethrow;
     }
   }
+
+  static Future<VipPackageResponse> getVipPackages(String token) async {
+    try {
+      print('ApiService - Fetching VIP packages');
+      final response = await http.get(
+        Uri.parse('$baseUrl/vip/packages'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      print('ApiService - Raw VIP packages response: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        print('ApiService - Parsed VIP packages response: $jsonResponse');
+        return VipPackageResponse.fromJson(jsonResponse);
+      } else {
+        print(
+            'ApiService - Error response: ${response.statusCode} - ${response.body}');
+        throw Exception('Failed to fetch VIP packages: ${response.body}');
+      }
+    } catch (e) {
+      print('ApiService - Exception during VIP packages fetch: $e');
+      rethrow;
+    }
+  }
+
+  static Future<void> updateVipPackage(
+    String token,
+    String packageId,
+    VipPackage package,
+  ) async {
+    try {
+      print('ApiService - Updating VIP package: $packageId');
+      final response = await http.put(
+        Uri.parse('$baseUrl/vip/admin/packages/$packageId'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(package.toJson()),
+      );
+
+      print('ApiService - Raw VIP package update response: ${response.body}');
+
+      if (response.statusCode != 200) {
+        print(
+            'ApiService - Error response: ${response.statusCode} - ${response.body}');
+        throw Exception('Failed to update VIP package: ${response.body}');
+      }
+    } catch (e) {
+      print('ApiService - Exception during VIP package update: $e');
+      rethrow;
+    }
+  }
+
+  static Future<void> cancelUserVip(String token, String userId) async {
+    try {
+      print('ApiService - Cancelling VIP for user: $userId');
+      final response = await http.delete(
+        Uri.parse('$baseUrl/vip/admin/users/$userId/cancel'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      print('ApiService - Raw cancel VIP response: ${response.body}');
+
+      if (response.statusCode != 200) {
+        print(
+            'ApiService - Error response: ${response.statusCode} - ${response.body}');
+        throw Exception('Failed to cancel user VIP: ${response.body}');
+      }
+    } catch (e) {
+      print('ApiService - Exception during VIP cancellation: $e');
+      rethrow;
+    }
+  }
+
+  static Future<void> grantUserVip(
+      String token, String userId, String packageId) async {
+    try {
+      print('ApiService - Granting VIP to user: $userId, package: $packageId');
+      final response = await http.post(
+        Uri.parse('$baseUrl/vip/admin/users/$userId/grant'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({'packageId': packageId}),
+      );
+
+      print('ApiService - Raw grant VIP response: ${response.body}');
+
+      if (response.statusCode != 200) {
+        print(
+            'ApiService - Error response: ${response.statusCode} - ${response.body}');
+        throw Exception('Failed to grant user VIP: ${response.body}');
+      }
+    } catch (e) {
+      print('ApiService - Exception during VIP grant: $e');
+      rethrow;
+    }
+  }
 }

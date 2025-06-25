@@ -54,4 +54,34 @@ class UserListProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> cancelUserVip(String token, String userId) async {
+    try {
+      await ApiService.cancelUserVip(token, userId);
+      // Refresh users list to get updated data
+      await fetchUsers(token);
+    } catch (e) {
+      _error = e.toString();
+      notifyListeners();
+      rethrow;
+    }
+  }
+
+  Future<void> grantUserVip(
+      String token, String userId, String packageId) async {
+    try {
+      await ApiService.grantUserVip(token, userId, packageId);
+      // Refresh users list to get updated data
+      await fetchUsers(token);
+    } catch (e) {
+      _error = e.toString();
+      notifyListeners();
+      rethrow;
+    }
+  }
+
+  void clearError() {
+    _error = null;
+    notifyListeners();
+  }
 }
