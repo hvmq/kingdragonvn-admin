@@ -55,7 +55,7 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
                   Row(
                     children: [
                       const Text(
-                        'Username: ',
+                        'Tên người dùng: ',
                         style: TextStyle(
                           color: Colors.black54,
                           fontSize: 12,
@@ -75,7 +75,7 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
                   Row(
                     children: [
                       const Text(
-                        'Phone: ',
+                        'Số điện thoại: ',
                         style: TextStyle(
                           color: Colors.black54,
                           fontSize: 12,

@@ -301,15 +301,15 @@ class UserListTable extends StatelessWidget {
       child: SingleChildScrollView(
         child: DataTable(
           columns: const [
-            DataColumn(label: Text('Username')),
-            DataColumn(label: Text('Phone')),
+            DataColumn(label: Text('Tên người dùng')),
+            DataColumn(label: Text('Số điện thoại')),
             DataColumn(label: Text('VIP')),
             DataColumn(label: Text('Ref ID')),
-            DataColumn(label: Text('Balance')),
-            DataColumn(label: Text('VIP Package')),
-            DataColumn(label: Text('Remaining Days')),
-            DataColumn(label: Text('Valid Until')),
-            DataColumn(label: Text('Actions')),
+            DataColumn(label: Text('Số dư')),
+            DataColumn(label: Text('Gói VIP')),
+            DataColumn(label: Text('Số ngày còn lại')),
+            DataColumn(label: Text('Hiệu lực đến')),
+            DataColumn(label: Text('Thao tác')),
           ],
           rows: users.map((user) {
             return DataRow(
@@ -530,7 +530,7 @@ class _UserListTabState extends State<UserListTab>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Error: ${userListProvider.error}',
+                        'Lỗi: ${userListProvider.error}',
                         style: const TextStyle(color: Colors.red),
                       ),
                       const SizedBox(height: 16),
@@ -541,7 +541,7 @@ class _UserListTabState extends State<UserListTab>
                             userListProvider.fetchUsers(token);
                           }
                         },
-                        child: const Text('Retry'),
+                        child: const Text('Thử lại'),
                       ),
                     ],
                   ),

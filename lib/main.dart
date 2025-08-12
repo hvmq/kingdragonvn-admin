@@ -17,27 +17,27 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  // Widget gốc của ứng dụng
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Admin Kingdragonvn',
       theme: ThemeData(
-        // This is the theme of your application.
+        // Đây là giao diện của ứng dụng.
         //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
+        // THỬ ĐIỀU NÀY: Thử chạy ứng dụng với "flutter run". Bạn sẽ thấy
+        // ứng dụng có thanh công cụ màu tím. Sau đó, không cần thoát ứng dụng,
+        // hãy thử thay đổi seedColor trong colorScheme bên dưới thành Colors.green
+        // và sau đó gọi "hot reload" (lưu thay đổi hoặc nhấn nút "hot
+        // reload" trong IDE hỗ trợ Flutter, hoặc nhấn "r" nếu bạn sử dụng
+        // dòng lệnh để khởi động ứng dụng).
         //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
+        // Lưu ý rằng bộ đếm không được đặt lại về 0; trạng thái của ứng dụng
+        // không bị mất trong quá trình tải lại. Để đặt lại trạng thái, sử dụng hot
+        // restart thay thế.
         //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
+        // Điều này cũng hoạt động cho mã, không chỉ cho giá trị: Hầu hết các thay đổi mã có thể được
+        // kiểm tra chỉ với hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
@@ -56,14 +56,14 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
+  // Widget này là trang chủ của ứng dụng. Nó là stateful, có nghĩa là
+  // nó có một đối tượng State (được định nghĩa bên dưới) chứa các trường ảnh hưởng đến
+  // cách nó hiển thị.
 
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+  // Lớp này là cấu hình cho trạng thái. Nó chứa các giá trị (trong trường hợp này
+  // là tiêu đề) được cung cấp bởi phần tử cha (trong trường hợp này là widget App) và
+  // được sử dụng bởi phương thức build của State. Các trường trong lớp con Widget luôn
+  // được đánh dấu là "final".
 
   final String title;
 
@@ -76,54 +76,54 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
+      // Lệnh gọi setState này cho Flutter biết rằng có điều gì đó
+      // đã thay đổi trong State này, điều này khiến nó chạy lại phương thức build bên dưới
+      // để màn hình có thể phản ánh các giá trị đã cập nhật. Nếu chúng ta thay đổi
+      // _counter mà không gọi setState(), thì phương thức build sẽ không
+      // được gọi lại, và do đó không có gì dường như xảy ra.
       _counter++;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
+    // Phương thức này được chạy lại mỗi khi setState được gọi, ví dụ như được thực hiện
+    // bởi phương thức _incrementCounter ở trên.
     //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    // Flutter framework đã được tối ưu hóa để làm cho việc chạy lại các phương thức build
+    // nhanh chóng, để bạn có thể chỉ cần xây dựng lại bất cứ thứ gì cần cập nhật thay vì
+    // phải thay đổi từng phiên bản widget một cách riêng lẻ.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
+        // THỬ ĐIỀU NÀY: Thử thay đổi màu ở đây thành một màu cụ thể (ví dụ:
+        // Colors.amber) và kích hoạt hot reload để xem thanh AppBar
+        // thay đổi màu trong khi các màu khác vẫn giữ nguyên.
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
+        // Ở đây chúng ta lấy giá trị từ đối tượng MyHomePage được tạo bởi
+        // phương thức App.build, và sử dụng nó để đặt tiêu đề của thanh ứng dụng.
         title: Text(widget.title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+        // Center là một widget bố cục. Nó lấy một widget con và định vị nó
+        // ở giữa của widget cha.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
+          // Column cũng là một widget bố cục. Nó lấy một danh sách các con và
+          // sắp xếp chúng theo chiều dọc. Mặc định, nó tự điều chỉnh kích thước để vừa với các con
+          // theo chiều ngang, và cố gắng cao bằng với widget cha.
           //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
+          // Column có nhiều thuộc tính để kiểm soát cách nó định kích thước và
+          // cách nó định vị các con. Ở đây chúng ta sử dụng mainAxisAlignment để
+          // căn giữa các con theo chiều dọc; trục chính ở đây là trục dọc
+          // vì Columns là dọc (trục chéo sẽ là
+          // ngang).
           //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
+          // THỬ ĐIỀU NÀY: Gọi "debug painting" (chọn hành động "Toggle Debug Paint"
+          // trong IDE, hoặc nhấn "p" trong bảng điều khiển), để xem
+          // khung dây cho mỗi widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              'Bạn đã nhấn nút này nhiều lần:',
             ),
             Text(
               '$_counter',
@@ -134,9 +134,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        tooltip: 'Tăng',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ), // Dấu phẩy cuối này giúp định dạng tự động đẹp hơn cho các phương thức build.
     );
   }
 }

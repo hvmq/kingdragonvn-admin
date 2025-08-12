@@ -143,11 +143,11 @@ class _MoneyOrdersTabState extends State<MoneyOrdersTab> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Error: ${provider.error}'),
+                Text('Lỗi: ${provider.error}'),
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: _loadInitialData,
-                  child: const Text('Retry'),
+                  child: const Text('Thử lại'),
                 ),
               ],
             ),
@@ -212,8 +212,9 @@ class _MoneyOrdersTabState extends State<MoneyOrdersTab> {
                     child: DataTable(
                       columns: const [
                         DataColumn(label: Text('Số tiền')),
-                        DataColumn(label: Text('Username')),
-                        DataColumn(label: Text('Ref ID')),
+                        DataColumn(label: Text('Tên người dùng')),
+                        DataColumn(label: Text('Số điện thoại')),
+                        DataColumn(label: Text('Mã giới thiệu')),
                         DataColumn(label: Text('Thời gian')),
                         DataColumn(label: Text('Trạng thái')),
                         DataColumn(label: Text('Thao tác')),
@@ -232,11 +233,12 @@ class _MoneyOrdersTabState extends State<MoneyOrdersTab> {
                               ),
                             ),
                             DataCell(Text(transaction.user.username)),
+                            DataCell(Text(transaction.user.phoneNumber)),
                             DataCell(Text(transaction.user.refId)),
                             DataCell(Text(_formatDate(transaction.createdAt))),
                             DataCell(
                               Text(
-                                transaction.status,
+                                _getStatusText(transaction.status),
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w500,
