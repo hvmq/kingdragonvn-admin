@@ -267,4 +267,179 @@ class ApiService {
       rethrow;
     }
   }
+
+  static Future<Map<String, dynamic>> getDepositAccounts(String token) async {
+    try {
+      print('ApiService - Fetching deposit accounts');
+      final response = await http.get(
+        Uri.parse('$baseUrl/deposit-accounts'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      print('ApiService - Raw deposit accounts response: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
+        print('ApiService - Parsed deposit accounts response: $jsonResponse');
+        return jsonResponse;
+      } else {
+        print(
+            'ApiService - Error response: ${response.statusCode} - ${response.body}');
+        throw Exception('Failed to fetch deposit accounts: ${response.body}');
+      }
+    } catch (e) {
+      print('ApiService - Exception during deposit accounts fetch: $e');
+      rethrow;
+    }
+  }
+
+  static Future<Map<String, dynamic>> getBanksList(String token) async {
+    try {
+      print('ApiService - Fetching banks list');
+      final response = await http.get(
+        Uri.parse('$baseUrl/deposit-accounts/banks'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      print('ApiService - Raw banks list response: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
+        print('ApiService - Parsed banks list response: $jsonResponse');
+        return jsonResponse;
+      } else {
+        print(
+            'ApiService - Error response: ${response.statusCode} - ${response.body}');
+        throw Exception('Failed to fetch banks list: ${response.body}');
+      }
+    } catch (e) {
+      print('ApiService - Exception during banks list fetch: $e');
+      rethrow;
+    }
+  }
+
+  static Future<void> createDepositAccount(
+    String token, {
+    required String bankCode,
+    required String accountNumber,
+  }) async {
+    try {
+      print('ApiService - Creating deposit account');
+      final response = await http.post(
+        Uri.parse('$baseUrl/deposit-accounts'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          'bankCode': bankCode,
+          'accountNumber': accountNumber,
+        }),
+      );
+
+      print('ApiService - Raw create deposit account response: ${response.body}');
+
+      if (response.statusCode != 201 && response.statusCode != 200) {
+        print(
+            'ApiService - Error response: ${response.statusCode} - ${response.body}');
+        throw Exception('Failed to create deposit account: ${response.body}');
+      }
+    } catch (e) {
+      print('ApiService - Exception during create deposit account: $e');
+      rethrow;
+    }
+  }
+
+  static Future<void> deleteDepositAccount(
+    String token, {
+    required String accountId,
+  }) async {
+    try {
+      print('ApiService - Deleting deposit account: $accountId');
+      final response = await http.delete(
+        Uri.parse('$baseUrl/deposit-accounts/$accountId'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      print('ApiService - Raw delete deposit account response: ${response.body}');
+
+      if (response.statusCode != 200) {
+        print(
+            'ApiService - Error response: ${response.statusCode} - ${response.body}');
+        throw Exception('Failed to delete deposit account: ${response.body}');
+      }
+    } catch (e) {
+      print('ApiService - Exception during delete deposit account: $e');
+      rethrow;
+    }
+  }
+
+  static Future<void> activateDepositAccount(
+    String token, {
+    required String accountId,
+  }) async {
+    try {
+      print('ApiService - Activating deposit account: $accountId');
+      final response = await http.post(
+        Uri.parse('$baseUrl/deposit-accounts/$accountId/activate'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+          'Accept': 'application/json',
+        },
+      );
+
+      print('ApiService - Raw activate deposit account response: ${response.body}');
+
+      if (response.statusCode != 200) {
+        print(
+            'ApiService - Activate via PATCH failed: ${response.statusCode} - ${response.body}');
+        // Fallback: Some browsers/servers block PATCH due to CORS. Retry with POST override.
+        final fallback = await http.post(
+          Uri.parse('$baseUrl/deposit-accounts/$accountId/activate'),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+            'Accept': 'application/json',
+            'X-HTTP-Method-Override': 'PATCH',
+          },
+          body: '{}',
+        );
+        print('ApiService - Fallback activate response: ${fallback.body}');
+        if (fallback.statusCode != 200) {
+          throw Exception('Failed to activate deposit account: ${fallback.body}');
+        }
+      }
+    } catch (e) {
+      print('ApiService - Exception during activate deposit account: $e');
+      // Fallback on client exception as well
+      try {
+        final fallback = await http.post(
+          Uri.parse('$baseUrl/deposit-accounts/$accountId/activate'),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+            'Accept': 'application/json',
+            'X-HTTP-Method-Override': 'PATCH',
+          },
+          body: '{}',
+        );
+        print('ApiService - Fallback activate (exception) response: ${fallback.body}');
+        if (fallback.statusCode != 200) {
+          rethrow;
+        }
+      } catch (_) {
+        rethrow;
+      }
+    }
+  }
 }

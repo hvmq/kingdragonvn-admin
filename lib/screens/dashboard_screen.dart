@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import '../providers/user_list_provider.dart';
 import '../providers/transaction_provider.dart';
 import '../providers/vip_provider.dart';
+import '../providers/bank_provider.dart';
+import 'bank_accounts_tab.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -25,6 +27,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ChangeNotifierProvider(create: (_) => UserListProvider()),
         ChangeNotifierProvider(create: (_) => TransactionProvider()),
         ChangeNotifierProvider(create: (_) => VipProvider()),
+        ChangeNotifierProvider(create: (_) => BankProvider()),
       ],
       child: Scaffold(
         appBar: const ProfileAppBar(),
@@ -45,6 +48,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   icon: Icon(Icons.diamond),
                   label: Text('Gói VIP'),
                 ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.account_balance),
+                  label: Text('Bank'),
+                ),
               ],
               selectedIndex: _selectedIndex,
               onDestinationSelected: (index) {
@@ -61,6 +68,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   MoneyOrdersTab(),
                   UserListTab(),
                   VipPackagesTab(),
+                  BankAccountsTab(),
                 ],
               ),
             ),

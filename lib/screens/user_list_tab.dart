@@ -305,10 +305,11 @@ class UserListTable extends StatelessWidget {
             DataColumn(label: Text('Số điện thoại')),
             DataColumn(label: Text('VIP')),
             DataColumn(label: Text('Ref ID')),
+            DataColumn(label: Text('Sponsor')),
             DataColumn(label: Text('Số dư')),
             DataColumn(label: Text('Gói VIP')),
             DataColumn(label: Text('Số ngày còn lại')),
-            DataColumn(label: Text('Hiệu lực đến')),
+            // DataColumn(label: Text('Hiệu lực đến')),
             DataColumn(label: Text('Thao tác')),
           ],
           rows: users.map((user) {
@@ -336,6 +337,7 @@ class UserListTable extends StatelessWidget {
                   ),
                 ),
                 DataCell(Text(user.refId)),
+                DataCell(Text(user.sponsor ?? '-')),
                 DataCell(
                   Text(
                     user.balance.toString(),
@@ -346,10 +348,12 @@ class UserListTable extends StatelessWidget {
                   ),
                 ),
                 DataCell(Text(user.vipInfo?.package?.name ?? '-')),
-                DataCell(Text(user.vipInfo?.remainingDays?.toString() ?? '-')),
-                DataCell(Text(user.vipInfo?.endDate != null
-                    ? _formatDate(user.vipInfo!.endDate!)
+                DataCell(Text(user.vipInfo != null
+                    ? user.vipInfo!.remainingDays.toString()
                     : '-')),
+                // DataCell(Text(user.vipInfo?.endDate != null
+                //     ? _formatDate(user.vipInfo!.endDate!)
+                //     : '-')),
                 DataCell(
                   Row(
                     mainAxisSize: MainAxisSize.min,

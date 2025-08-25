@@ -30,6 +30,7 @@ class UserListItem {
   final String refId;
   final String vip;
   final VipInfo? vipInfo;
+  final String? sponsor;
 
   UserListItem({
     required this.id,
@@ -41,6 +42,7 @@ class UserListItem {
     required this.refId,
     required this.vip,
     this.vipInfo,
+    this.sponsor,
   });
 
   factory UserListItem.fromJson(Map<String, dynamic> json) {
@@ -55,6 +57,7 @@ class UserListItem {
       vip: json['vip'] as String? ?? 'VIP 0',
       vipInfo:
           json['vipInfo'] != null ? VipInfo.fromJson(json['vipInfo']) : null,
+      sponsor: json['sponsor'] as String?,
     );
   }
 }
