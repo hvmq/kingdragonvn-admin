@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import '../models/auth_response.dart';
 import '../models/user_list_response.dart';
 import '../models/transaction_response.dart';
+import '../models/notification_response.dart';
 
 class ApiService {
   // TODO: Update this URL with your current ngrok URL
@@ -440,6 +441,60 @@ class ApiService {
       } catch (_) {
         rethrow;
       }
+    }
+  }
+
+  static Future<NotificationResponse> getNotification() async {
+    try {
+      print('ApiService - Fetching notification');
+      final response = await http.get(
+        Uri.parse('$baseUrl/notifications'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+
+      print('ApiService - Raw notification response: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        print('ApiService - Parsed notification response: $jsonResponse');
+        return NotificationResponse.fromJson(jsonResponse);
+      } else {
+        print(
+            'ApiService - Error response: ${response.statusCode} - ${response.body}');
+        throw Exception('Failed to fetch notification: ${response.body}');
+      }
+    } catch (e) {
+      print('ApiService - Exception during notification fetch: $e');
+      rethrow;
+    }
+  }
+
+  static Future<void> updateNotification(String text, String token) async {
+    try {
+      print('ApiService - Updating notification');
+      final response = await http.put(
+        Uri.parse('$baseUrl/notifications'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          'text': text,
+        }),
+      );
+
+      print('ApiService - Raw update notification response: ${response.body}');
+
+      if (response.statusCode != 200) {
+        print(
+            'ApiService - Error response: ${response.statusCode} - ${response.body}');
+        throw Exception('Failed to update notification: ${response.body}');
+      }
+    } catch (e) {
+      print('ApiService - Exception during notification update: $e');
+      rethrow;
     }
   }
 }
